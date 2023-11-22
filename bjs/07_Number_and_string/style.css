@@ -1,9 +1,50 @@
-.calc-row {
-    height: 100vh;
-    font-family: 'Share Tech Mono', monospace;
+.container {
+    width: 19rem;
+    padding: 0.4rem;    
+    border: 0.1rem solid black;
+    background-color: #e1e1e1;
+    text-align: center;
 }
 
 .input-window {
+    height: 3rem;
+    margin-bottom: 0.2rem;
     text-align: end;
     font-size: x-large;
+}
+
+button {
+    width: 4rem;
+    height: 4rem;
+    display: inline-block;
+    border: 0.1rem solid black;
+    border-radius: .25rem;
+    margin: 0.2rem;
+    font-size: 1.5rem;
+    text-align: center;
+    vertical-align: middle;
+}
+
+button:hover {
+    filter: opacity(80%);
+}
+
+button:active {
+    border: 0.1rem solid gray; 
+}
+
+#btn_clr {
+    width: 8.65rem;
+    color: #fff;
+    background-color: #dc3545;
+    
+}
+
+.btn-operation {
+    color: #fff;
+    background-color: #0060c7;
+}
+
+.btn-data-input {
+    background-color: #ffffffed;
 }
