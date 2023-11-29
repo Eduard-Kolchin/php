@@ -20,7 +20,7 @@ let maxValueEnter;
         maxValue = 999;
     }
 alert(`Загадайте любое целое число от ${minValue} до ${maxValue}, а я его угадаю`);
-let answerNumber  = Math.floor((minValue + maxValue) / 2);
+let answerNumber  = Math.round((minValue + maxValue) / 2);
 let orderNumber = 1;
 let gameRun = true;
 
@@ -49,7 +49,7 @@ document.getElementById('btnRetry').addEventListener('click', function () {
         maxValue = 999;
     }
 alert(`Загадайте любое целое число от ${minValue} до ${maxValue}, а я его угадаю`);
-answerNumber  = Math.floor((minValue + maxValue) / 2);
+answerNumber  = Math.round((minValue + maxValue) / 2);
 orderNumber = 1;
 gameRun = true;
     
@@ -70,7 +70,7 @@ document.getElementById('btnOver').addEventListener('click', function () {
             gameRun = false;
         } else {
             minValue = answerNumber;
-            answerNumber  = Math.floor((minValue + maxValue) / 2);
+            answerNumber  = Math.round((minValue + maxValue) / 2);
             orderNumber++;
             orderNumberField.innerText = orderNumber;
             phraseRandom = Math.round( Math.random()*3);
