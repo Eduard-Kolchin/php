@@ -1,6 +1,6 @@
 const personGenerator = {
     surnameJson: `{  
-        "count": 15,
+        "count": 16,
         "list": {
             "id_1": "Иванов",
             "id_2": "Смирнов",
@@ -27,12 +27,12 @@ const personGenerator = {
             "id_2": "Максим",
             "id_3": "Иван",
             "id_4": "Артем",
-            "id_5": "Дмитрий",
-            "id_6": "Никита",
+            "id_5": "Вячеслав",
+            "id_6": "Виктор",
             "id_7": "Михаил",
             "id_8": "Даниил",
             "id_9": "Егор",
-            "id_10": "Андрей"
+            "id_10": "Семён"
         }
     }`,
     firstNameFemaleJson: `{
@@ -50,36 +50,140 @@ const personGenerator = {
             "id_10": "Анна"
         }
     }`,
-
+    employmentMaleJson: `{
+        "count": 10,
+        "list": {     
+            "id_1": "Сантехник",
+            "id_2": "Слесарь",
+            "id_3": "Монтажник",
+            "id_4": "Програмист",
+            "id_5": "Бухгалтер",
+            "id_6": "Учитель",
+            "id_7": "Менеджер",
+            "id_8": "Инженер",
+            "id_9": "Самозанятый",
+            "id_10": "Безработный"
+        }
+    }`,    
+    employmentFemaleJson: `{
+        "count": 10,
+        "list": {     
+            "id_1": "Косметолог",
+            "id_2": "Парикмахер",
+            "id_3": "Секретарь",
+            "id_4": "Програмист",
+            "id_5": "Бухгалтер",
+            "id_6": "Учитель",
+            "id_7": "Менеджер",
+            "id_8": "Шеф-повар",
+            "id_9": "Швея",
+            "id_10": "Домохозяйка"
+        }
+    }`,
+    monthJson: `{
+        "count": 12,
+        "list": {     
+            "id_1": "января",
+            "id_2": "февраля",
+            "id_3": "марта",
+            "id_4": "апреля",
+            "id_5": "мая",
+            "id_6": "июня",
+            "id_7": "июля",
+            "id_8": "августа",
+            "id_9": "сентября",
+            "id_10": "октября",
+            "id_11": "ноября",
+            "id_12": "декабря"
+        }
+    }`,
+    
     GENDER_MALE: 'Мужчина',
     GENDER_FEMALE: 'Женщина',
+// Рандомный номер
+    randomIntNumber: (max = 1, min = 0) => Math.round(Math.random() * (max - min) + 1),
 
-    randomIntNumber: (max = 1, min = 0) => Math.floor(Math.random() * (max - min + 1) + min),
-
+// Метод выбора рандомного значения из списка Json
     randomValue: function (json) {
         const obj = JSON.parse(json);
-        const prop = `id_${this.randomIntNumber(obj.count, 1)}`;  // this = personGenerator
+        const prop = `id_${this.randomIntNumber(obj.count, 1)}`;
         return obj.list[prop];
     },
 
+// Рандомный пол
+    randomGender: function(){
+        const gender = Math.round(Math.random());
+        return (gender) ? this.GENDER_MALE : this.GENDER_FEMALE ;
+    },
+
+// Рандомное имя
     randomFirstName: function() {
-
-        return this.randomValue(this.firstNameMaleJson);
-
+        if (this.person.gender == 'Мужчина') {
+            return this.randomValue(this.firstNameMaleJson);
+        }
+        else {
+            return this.randomValue(this.firstNameFemaleJson);
+        }
     },
 
-
-     randomSurname: function() {
-
-        return this.randomValue(this.surnameJson);
-
+// Рандомная фамилия
+    randomSurname: function() {
+        if (this.person.gender == 'Мужчина') {
+            return this.randomValue(this.surnameJson);
+        }
+        else {
+            return this.randomValue(this.surnameJson) + 'а';
+        }
     },
 
+// Рандомное отчество
+    randomPatronymic: function() {
+        if (this.person.gender == 'Мужчина') {
+            return this.randomValue(this.firstNameMaleJson) + 'ович';
+        }
+        else {
+            return this.randomValue(this.firstNameMaleJson) + 'овна';
+        }
+    },
+
+// Рандомный род занятий
+    randomEmployment: function() {
+        if (this.person.gender == 'Мужчина') {
+            return this.randomValue(this.employmentMaleJson);
+        }
+        else {
+            return this.randomValue(this.employmentFemaleJson);
+        }
+    },
+
+// Рандомная дата рождения
+    randomBirthDay: function() {
+        const year = 2023 - (18 + this.randomIntNumber(55, 18));
+        const month = this.randomValue(this.monthJson);
+        const day = () => {
+            if (month == 'февраля') {
+                return this.randomIntNumber(28, 1);
+            }
+            else {
+                if (month == 'апреля' || month == 'июня' || month == 'сентября' || month == 'ноября') {
+                    return this.randomIntNumber(30, 1);
+                }
+                else {
+                    return this.randomIntNumber(31, 1);
+                }
+            }
+        };
+        return day() + ' ' + month + ' ' + year;
+    },
 
     getPerson: function () {
         this.person = {};
-        // this.person.gender = this.randomGender();
+        this.person.gender = this.randomGender();
         this.person.firstName = this.randomFirstName();
+        this.person.surname = this.randomSurname();
+        this.person.patronymic = this.randomPatronymic();
+        this.person.employment = this.randomEmployment();
+        this.person.birthDay = this.randomBirthDay();
         return this.person;
     }
 };
